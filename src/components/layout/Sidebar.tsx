@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { STATUS_LABELS } from '@/constants';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/context/ThemeContext';
+import { SubscriptionAccessWrapper } from '@/components/subscription/SubscriptionAccessWrapper';
 import { 
   Select,
   SelectContent,
@@ -131,30 +132,48 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
         </Button>
       </div>
       
-      <Button asChild className="mx-4 bg-praxis-light-orange hover:bg-praxis-light-orange/90 text-white mb-6">
-        <Link to="/clients/new" className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          <span>Novo Cliente</span>
-        </Link>
-      </Button>
+      <SubscriptionAccessWrapper action="criar um novo cliente">
+        <Button asChild className="mx-4 bg-praxis-light-orange hover:bg-praxis-light-orange/90 text-white mb-6">
+          <Link to="/clients/new" className="flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            <span>Novo Cliente</span>
+          </Link>
+        </Button>
+      </SubscriptionAccessWrapper>
       
       <ScrollArea className="flex-1 px-4">
         <nav className="flex flex-col gap-2 mb-6">
-          {navigationItems.map((item) => (
-            <Link 
-              key={item.path} 
-              to={item.path}
-              className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-md transition-colors",
-                isActive(item.path) 
-                  ? "bg-white/20 text-white" 
-                  : `hover:bg-white/10 ${textColor}`
-              )}
-            >
-              {item.icon}
-              <span>{item.name}</span>
-            </Link>
-          ))}
+          {navigationItems.map((item) => {
+            // Define quais páginas precisam de proteção
+            const protectedPages = ['/clients', '/cases', '/judicial-processes', '/tasks', '/petitions', '/legislation', '/search'];
+            const needsProtection = protectedPages.includes(item.path);
+            
+            const linkContent = (
+              <Link 
+                key={item.path} 
+                to={item.path}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-md transition-colors",
+                  isActive(item.path) 
+                    ? "bg-white/20 text-white" 
+                    : `hover:bg-white/10 ${textColor}`
+                )}
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            );
+
+            if (needsProtection) {
+              return (
+                <SubscriptionAccessWrapper key={item.path} action={`acessar ${item.name.toLowerCase()}`}>
+                  {linkContent}
+                </SubscriptionAccessWrapper>
+              );
+            }
+
+            return linkContent;
+          })}
         </nav>
         
         <div className="border-t border-white/20 pt-4 mb-6">

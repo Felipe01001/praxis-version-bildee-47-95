@@ -63,14 +63,19 @@ const SubscriptionPage = () => {
       });
 
       if (!userData.cpf || userData.cpf.length !== 11) {
-        toast.error('CPF inválido. Complete seu perfil com um CPF válido.');
+        toast.error('CPF inválido. Complete seu perfil com um CPF válido para continuar.');
         navigate('/profile');
         return;
       }
 
       if (!userData.cellphone || userData.cellphone.length < 10) {
-        toast.error('Telefone inválido. Complete seu perfil com um telefone válido.');
+        toast.error('Telefone inválido. Complete seu perfil com um telefone válido para continuar.');
         navigate('/profile');
+        return;
+      }
+
+      if (!userData.email) {
+        toast.error('Email não encontrado. Verifique sua conta.');
         return;
       }
 
