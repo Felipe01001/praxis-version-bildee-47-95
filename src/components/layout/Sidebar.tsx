@@ -144,11 +144,7 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       <ScrollArea className="flex-1 px-4">
         <nav className="flex flex-col gap-2 mb-6">
           {navigationItems.map((item) => {
-            // Define quais páginas precisam de proteção
-            const protectedPages = ['/clients', '/cases', '/judicial-processes', '/tasks', '/petitions', '/legislation', '/search'];
-            const needsProtection = protectedPages.includes(item.path);
-            
-            const linkContent = (
+            return (
               <Link 
                 key={item.path} 
                 to={item.path}
@@ -163,16 +159,6 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
                 <span>{item.name}</span>
               </Link>
             );
-
-            if (needsProtection) {
-              return (
-                <SubscriptionAccessWrapper key={item.path} action={`acessar ${item.name.toLowerCase()}`}>
-                  {linkContent}
-                </SubscriptionAccessWrapper>
-              );
-            }
-
-            return linkContent;
           })}
         </nav>
         

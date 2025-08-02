@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SubscriptionAccessWrapper } from '@/components/subscription/SubscriptionAccessWrapper';
 
 export const PetitionList = () => {
   const navigate = useNavigate();
@@ -89,10 +90,12 @@ export const PetitionList = () => {
             <Settings className="mr-2 h-4 w-4" />
             Gerenciar Modelos
           </Button>
-          <Button onClick={() => navigate('/petitions/new')} className="bg-praxis-olive hover:bg-praxis-olive/90">
-            <FilePlus className="mr-2 h-4 w-4" />
-            Nova Petição
-          </Button>
+          <SubscriptionAccessWrapper action="criar uma nova petição">
+            <Button onClick={() => navigate('/petitions/new')} className="bg-praxis-olive hover:bg-praxis-olive/90">
+              <FilePlus className="mr-2 h-4 w-4" />
+              Nova Petição
+            </Button>
+          </SubscriptionAccessWrapper>
           
         </div>
       </div>
@@ -178,10 +181,12 @@ export const PetitionList = () => {
               <p className="text-lg font-medium">Nenhuma petição encontrada</p>
               <p className="mt-1 text-muted-foreground">Crie uma nova petição ou importe uma existente</p>
               <div className="flex justify-center gap-4 mt-4">
-                <Button onClick={() => navigate('/petitions/new')} className="bg-praxis-olive hover:bg-praxis-olive/90">
-                  <FilePlus className="mr-2 h-4 w-4" />
-                  Nova Petição
-                </Button>
+                <SubscriptionAccessWrapper action="criar uma nova petição">
+                  <Button onClick={() => navigate('/petitions/new')} className="bg-praxis-olive hover:bg-praxis-olive/90">
+                    <FilePlus className="mr-2 h-4 w-4" />
+                    Nova Petição
+                  </Button>
+                </SubscriptionAccessWrapper>
                 <Button variant="outline" onClick={() => navigate('/petitions/import')}>
                   <Upload className="mr-2 h-4 w-4" />
                   Importar Petição

@@ -10,6 +10,7 @@ import { AlertCircle, Search as SearchIcon, Clock, Trash2, RefreshCw } from 'luc
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { SubscriptionAccessWrapper } from '@/components/subscription/SubscriptionAccessWrapper';
 
 export default function LegislationSearch() {
   const [currentQuery, setCurrentQuery] = useState('');
@@ -67,10 +68,12 @@ export default function LegislationSearch() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <LegislationSearchForm 
-            onSearch={handleSearch}
-            isLoading={isLoading}
-          />
+          <SubscriptionAccessWrapper action="pesquisar na legislação">
+            <LegislationSearchForm 
+              onSearch={handleSearch}
+              isLoading={isLoading}
+            />
+          </SubscriptionAccessWrapper>
         </CardContent>
       </Card>
 

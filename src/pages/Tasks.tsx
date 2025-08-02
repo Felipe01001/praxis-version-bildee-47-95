@@ -23,6 +23,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme } from '@/context/ThemeContext';
 import { useHoverEffect } from '@/hooks/useHoverEffect';
+import { SubscriptionAccessWrapper } from '@/components/subscription/SubscriptionAccessWrapper';
 
 const Tasks = () => {
   const navigate = useNavigate();
@@ -264,12 +265,14 @@ const Tasks = () => {
     <div className="container mx-auto py-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Gerenciamento de Tarefas</h1>
-        <Button onClick={() => {
-          setIsAddingTask(true);
-          resetTaskForm();
-        }}>
-          <Plus className="mr-2 h-4 w-4" /> Nova Tarefa
-        </Button>
+        <SubscriptionAccessWrapper action="criar uma nova tarefa">
+          <Button onClick={() => {
+            setIsAddingTask(true);
+            resetTaskForm();
+          }}>
+            <Plus className="mr-2 h-4 w-4" /> Nova Tarefa
+          </Button>
+        </SubscriptionAccessWrapper>
       </div>
       
       <Card className="w-full">

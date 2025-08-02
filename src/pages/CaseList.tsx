@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from '@/components/StatusBadge';
 import { Category, Status } from '@/types';
 import { CATEGORY_LABELS, SUBCATEGORIES } from '@/constants';
+import { SubscriptionAccessWrapper } from '@/components/subscription/SubscriptionAccessWrapper';
 
 const CaseList = () => {
   const {
@@ -84,10 +85,12 @@ const CaseList = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="sm:text-3xl font-bold text-praxis-text text-4xl text-center">Atendimentos</h1>
         
-        <Button onClick={handleCreateCase} className="bg-praxis-olive hover:bg-praxis-olive/90 flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Novo Atendimento
-        </Button>
+        <SubscriptionAccessWrapper action="criar um novo atendimento">
+          <Button onClick={handleCreateCase} className="bg-praxis-olive hover:bg-praxis-olive/90 flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            Novo Atendimento
+          </Button>
+        </SubscriptionAccessWrapper>
       </div>
       
       <Card className="overflow-hidden">
