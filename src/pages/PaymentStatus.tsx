@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock, AlertCircle, ArrowRight, ArrowLeft, Eye } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, ArrowRight, ArrowLeft, Eye, Copy } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
@@ -193,6 +193,51 @@ const PaymentStatus = () => {
               <p className="text-muted-foreground mb-6">
                 {statusConfig.description}
               </p>
+
+              {/* PIX Payment Section - Show when pending */}
+              {paymentStatus === 'pending' && (
+                <div className="space-y-4 mb-6">
+                  {/* QR Code */}
+                  {qrCodeBase64 && (
+                    <div className="bg-white p-4 rounded-lg inline-block border">
+                      <img 
+                        src={qrCodeBase64.startsWith('data:image/') ? qrCodeBase64 : `data:image/png;base64,${qrCodeBase64}`}
+                        alt="QR Code PIX" 
+                        className="w-48 h-48 mx-auto"
+                        onError={(e) => {
+                          console.error('QR Code failed to load');
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* PIX Copy Code */}
+                  {pixCode && (
+                    <div className="bg-muted p-3 rounded-lg text-left">
+                      <div className="text-sm font-medium mb-2 text-center">Código PIX Copia e Cola</div>
+                      <div className="p-2 bg-background rounded text-xs font-mono break-all mb-3 border">
+                        {pixCode}
+                      </div>
+                      <Button 
+                        onClick={() => {
+                          navigator.clipboard.writeText(pixCode);
+                          toast.success('Código PIX copiado!');
+                        }}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white"
+                        size="sm"
+                      >
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copiar código PIX
+                      </Button>
+                    </div>
+                  )}
+
+                  <p className="text-xs text-muted-foreground">
+                    Escaneie o QR Code com o app do seu banco ou copie o código PIX
+                  </p>
+                </div>
+              )}
 
               <div className="space-y-3">
                 <Button 
